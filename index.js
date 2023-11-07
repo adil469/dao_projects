@@ -1,41 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var inquirer_1 = require("inquirer");
+var systemGeneratedNo = Math.floor(Math.random() * 10);
 var answers = await inquirer_1.default.prompt([
     {
         type: "number",
-        name: "numberOne",
-        message: "Kindly enter your first no: "
-    },
-    {
-        type: "number",
-        name: "numberTwo",
-        message: "Kindly enter your second no: "
-    },
-    {
-        type: "list",
-        name: "operator",
-        choices: ["*", "+", "-", "/"],
-        message: "Select Operator: "
-    },
+        name: "userGuess",
+        message: "Write your guess b/w 1 to 10: "
+    }
 ]);
-var numberOne = answers.numberOne, numberTwo = answers.numberTwo, operator = answers.operator;
-if (numberOne && numberTwo && operator) {
-    var result = 0;
-    if (operator === "+") {
-        result = numberOne + numberTwo;
-    }
-    else if (operator === "-") {
-        result = numberOne - numberTwo;
-    }
-    if (operator === "/") {
-        result = numberOne / numberTwo;
-    }
-    if (operator === "*") {
-        result = numberOne * numberTwo;
-    }
-    console.log("Your result is :", result);
+var userGuess = answers.userGuess;
+console.log(userGuess, "userGuess", systemGeneratedNo, 'SYs');
+if (userGuess === systemGeneratedNo) {
+    console.log("Yeaaaa Your answer is correct \n You Win!");
 }
 else {
-    console.log("Kindly enter valid input");
+    console.log("Please try again Better luck next time!");
 }

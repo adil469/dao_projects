@@ -1,42 +1,25 @@
-import inquirer from "inquirer";
+import inquirer from 'inquirer';
 
-const answers : {
-    numberOne: number,
-    numberTwo: number,
-    operator: string
-} = await inquirer.prompt([
+type ansType = {
+    userGuess: number
+}
+
+const systemGeneratedNo = Math.floor(Math.random() * 10);
+
+
+const answers : ansType = await inquirer.prompt([
     {
         type: "number",
-        name: "numberOne",
-        message: "Kindly enter your first no: "
-    },
-    {
-        type: "number",
-        name: "numberTwo",
-        message: "Kindly enter your second no: "
-    },
-    {
-        type: "list",
-        name: "operator",
-        choices: ["*", "+", "-", "/"],
-        message: "Select Operator: "
-    },
-]);
+        name: "userGuess",
+        message: "Write your guess b/w 1 to 10: "
+    }
+])
 
-const {numberOne, numberTwo, operator} = answers;
-if(numberOne && numberTwo && operator) {
-    let result: number = 0;
-    if(operator === "+"){
-        result = numberOne + numberTwo
-    } else   if(operator === "-"){
-        result = numberOne - numberTwo
-    }   if(operator === "/"){
-        result = numberOne / numberTwo
-    }   if(operator === "*"){
-        result = numberOne * numberTwo
-    } 
+const {userGuess} = answers;
 
-    console.log("Your result is :", result)
-} else{
-    console.log("Kindly enter valid input")
+console.log(userGuess, "userGuess", systemGeneratedNo, 'SYs')
+if(userGuess === systemGeneratedNo){
+    console.log("Yeaaaa Your answer is correct \n You Win!")
+} else {
+    console.log("Please try again Better luck next time!")
 }
