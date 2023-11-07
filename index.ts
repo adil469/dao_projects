@@ -1,42 +1,69 @@
 import inquirer from "inquirer";
 
-const answers : {
-    numberOne: number,
-    numberTwo: number,
-    operator: string
-} = await inquirer.prompt([
+interface ansType {
+    userId: string,
+    userPin: number,
+    accountType : string,
+    transactionType: string,
+    amount: number
+
+}
+
+const answers: ansType  = await inquirer.prompt([
     {
-        type: "number",
-        name: "numberOne",
-        message: "Kindly enter your first no: "
+        type: "input",
+        name: "userId",
+        message: "Kindly Enter your Id: "
     },
     {
         type: "number",
-        name: "numberTwo",
-        message: "Kindly enter your second no: "
+        name: "userPin",
+        message: "Kindly Enter your PIN: "
     },
     {
         type: "list",
-        name: "operator",
-        choices: ["*", "+", "-", "/"],
-        message: "Select Operator: "
+        name: "accountType",
+        choices: ["Current", "Saving"],
+        message: "Select your account type:",
+       
     },
-]);
+    {
+        type: "list",
+        name: "transactionType",
+        choices: ["Fast Cash", "Withdraw"],
+        message: "Select your transaction",
+        when(answers) {
+            return answers.accountType
+        },
+    },
+    {
+        type: "list",
+        name: "amount",
+        choices: [1000, 2000 , 10000, 20000],
+        message: "Select your amount",
+        when(answers) {
+            return answers.transactionType == "Fast Cash"
+        },
+    },
+    {
+        type: "number",
+        name: "amount",
+        message: "Enter your amount",
+        when(answers) {
+            return answers.transactionType == "Withdraw"
+        },
+    }
+])
 
-const {numberOne, numberTwo, operator} = answers;
-if(numberOne && numberTwo && operator) {
-    let result: number = 0;
-    if(operator === "+"){
-        result = numberOne + numberTwo
-    } else   if(operator === "-"){
-        result = numberOne - numberTwo
-    }   if(operator === "/"){
-        result = numberOne / numberTwo
-    }   if(operator === "*"){
-        result = numberOne * numberTwo
-    } 
+if (answers.userId && answers.userPin) {
 
-    console.log("Your result is :", result)
-} else{
-    console.log("Kindly enter valid input")
+    const balance = Math.floor(Math.random()*10000000);
+    console.log(balance)
+    const EnteredAmount = answers.amount;
+    if (balance >= EnteredAmount) {
+        const remianing = balance - EnteredAmount;
+        console.log( "Your remaining balance is", remianing)
+    } else {
+        console.log("Insuficient Balance")
+    }
 }
