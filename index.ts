@@ -1,42 +1,52 @@
-import inquirer from "inquirer";
+import inquirer from "inquirer"
 
-const answers : {
-    numberOne: number,
-    numberTwo: number,
-    operator: string
-} = await inquirer.prompt([
-    {
-        type: "number",
-        name: "numberOne",
-        message: "Kindly enter your first no: "
+let Convertion = {
+    "PKR": {
+      "USD": 0.004434589800443458980044345898,
+      "GBP": 0.0037,
+      "PKR": 1
     },
+    "GBP": {
+      "USD": 1.21,
+      "PKR": 271.79,
+      "GBP": 1
+    },
+    "USD": {
+      "PKR": 225.50,
+      "GBP": 0.83,
+      "USD": 1
+    }
+  }
+
+  const answer: {
+    from: "PKR"| "USD" | "GBP",
+    to: "PKR"| "USD" | "GBP",
+    amount: number
+  } = await inquirer.prompt([
     {
-        type: "number",
-        name: "numberTwo",
-        message: "Kindly enter your second no: "
+        type: "list",
+        name: "from",
+        choices: ["PKR", "USD", "GBP"],
+        message: "Select your currency: "
     },
     {
         type: "list",
-        name: "operator",
-        choices: ["*", "+", "-", "/"],
-        message: "Select Operator: "
+        name: "to",
+        choices: ["PKR", "USD", "GBP"],
+        message: "Select your convertion currency: "
     },
-]);
+    {
+        type: "number",
+        name: "amount",
+        message: "Enter your convertion amount: "
+    }
+  ]);
 
-const {numberOne, numberTwo, operator} = answers;
-if(numberOne && numberTwo && operator) {
-    let result: number = 0;
-    if(operator === "+"){
-        result = numberOne + numberTwo
-    } else   if(operator === "-"){
-        result = numberOne - numberTwo
-    }   if(operator === "/"){
-        result = numberOne / numberTwo
-    }   if(operator === "*"){
-        result = numberOne * numberTwo
-    } 
+  const {from, to, amount} = answer;
 
-    console.log("Your result is :", result)
-} else{
-    console.log("Kindly enter valid input")
-}
+  if(from && to && amount) {
+    let result = Convertion[from][to] * amount;
+    console.log(`Your convertion from ${from} to ${to} is ${result}`)
+  } else {
+    console.log("Invalid inputs")
+  }

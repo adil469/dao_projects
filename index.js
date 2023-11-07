@@ -1,41 +1,47 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var inquirer_1 = require("inquirer");
-var answers = await inquirer_1.default.prompt([
-    {
-        type: "number",
-        name: "numberOne",
-        message: "Kindly enter your first no: "
+var Convertion = {
+    "PKR": {
+        "USD": 0.004434589800443458980044345898,
+        "GBP": 0.0037,
+        "PKR": 1
     },
+    "GBP": {
+        "USD": 1.21,
+        "PKR": 271.79,
+        "GBP": 1
+    },
+    "USD": {
+        "PKR": 225.50,
+        "GBP": 0.83,
+        "USD": 1
+    }
+};
+var answer = await inquirer_1.default.prompt([
     {
-        type: "number",
-        name: "numberTwo",
-        message: "Kindly enter your second no: "
+        type: "list",
+        name: "from",
+        choices: ["PKR", "USD", "GBP"],
+        message: "Select your currency: "
     },
     {
         type: "list",
-        name: "operator",
-        choices: ["*", "+", "-", "/"],
-        message: "Select Operator: "
+        name: "to",
+        choices: ["PKR", "USD", "GBP"],
+        message: "Select your convertion currency: "
     },
+    {
+        type: "number",
+        name: "amount",
+        message: "Enter your convertion amount: "
+    }
 ]);
-var numberOne = answers.numberOne, numberTwo = answers.numberTwo, operator = answers.operator;
-if (numberOne && numberTwo && operator) {
-    var result = 0;
-    if (operator === "+") {
-        result = numberOne + numberTwo;
-    }
-    else if (operator === "-") {
-        result = numberOne - numberTwo;
-    }
-    if (operator === "/") {
-        result = numberOne / numberTwo;
-    }
-    if (operator === "*") {
-        result = numberOne * numberTwo;
-    }
-    console.log("Your result is :", result);
+var from = answer.from, to = answer.to, amount = answer.amount;
+if (from && to && amount) {
+    var result = Convertion[from][to] * amount;
+    console.log("Your convertion from ".concat(from, " to ").concat(to, " is ").concat(result));
 }
 else {
-    console.log("Kindly enter valid input");
+    console.log("Invalid inputs");
 }
