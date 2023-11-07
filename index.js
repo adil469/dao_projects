@@ -1,41 +1,38 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var inquirer_1 = require("inquirer");
-var answers = await inquirer_1.default.prompt([
-    {
-        type: "number",
-        name: "numberOne",
-        message: "Kindly enter your first no: "
-    },
-    {
-        type: "number",
-        name: "numberTwo",
-        message: "Kindly enter your second no: "
-    },
-    {
-        type: "list",
-        name: "operator",
-        choices: ["*", "+", "-", "/"],
-        message: "Select Operator: "
-    },
-]);
-var numberOne = answers.numberOne, numberTwo = answers.numberTwo, operator = answers.operator;
-if (numberOne && numberTwo && operator) {
-    var result = 0;
-    if (operator === "+") {
-        result = numberOne + numberTwo;
+var todos = [];
+var loop = true;
+while (loop) {
+    var answers = await inquirer_1.default.prompt([
+        {
+            type: "input",
+            name: "TODO",
+            message: "What do you want to add in your todo? "
+        },
+        {
+            type: "confirm",
+            name: "addmore",
+            message: "Do you want to add more todo? ",
+            default: false
+        }
+    ]);
+    var TODO = answers.TODO, addmore = answers.addmore;
+    console.log(answers);
+    loop = addmore;
+    if (TODO) {
+        todos.push(TODO);
     }
-    else if (operator === "-") {
-        result = numberOne - numberTwo;
+    else {
+        console.log("Kindly add valid input");
     }
-    if (operator === "/") {
-        result = numberOne / numberTwo;
-    }
-    if (operator === "*") {
-        result = numberOne * numberTwo;
-    }
-    console.log("Your result is :", result);
+}
+if (todos.length > 0) {
+    console.log("Your TOdo List:");
+    todos.forEach(function (todo) {
+        console.log(todo);
+    });
 }
 else {
-    console.log("Kindly enter valid input");
+    console.log("No todos found");
 }
